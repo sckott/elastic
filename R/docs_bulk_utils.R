@@ -12,9 +12,17 @@ make_bulk <- function(df, index, counter, es_ids, type = NULL, path = NULL,
   if (!"es_action" %in% names(df)) {
     action <- "index"
     metadata <- if (!is.null(type)) {
-      sprintf(metadata_fmt, action, index, type, counter)
+      if (es_ids) {
+        sprintf(metadata_fmt, action, index, type)
+      } else {
+        sprintf(metadata_fmt, action, index, type, counter)
+      }
     } else {
-      sprintf(metadata_fmt, action, index, counter)
+      if (es_ids) {
+        sprintf(metadata_fmt, action, index)
+      } else {
+        sprintf(metadata_fmt, action, index, counter)
+      }
     }
     data <- jsonlite::toJSON(df, collapse = FALSE, na = "null",
       auto_unbox = TRUE, digits = digits)
