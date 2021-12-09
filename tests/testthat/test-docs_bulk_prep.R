@@ -2,8 +2,9 @@ context("docs_bulk_prep")
 
 test_that("docs_bulk_prep - works with data.frame input", {
   ff <- tempfile(fileext = ".json")
-  a <- docs_bulk_prep(mtcars, index = "hello", type = "world", 
-    path = ff, quiet = TRUE)
+  # a <- docs_bulk_prep(mtcars, index = "hello", type = "world", 
+  #   path = ff, quiet = TRUE)
+  a <- docs_bulk_prep(mtcars, index = "hello", path = ff, quiet = TRUE)
   a_res <- readLines(ff)
   
   expect_is(a, "character")

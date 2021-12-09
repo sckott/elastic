@@ -1,6 +1,6 @@
 context("nodes")
 
-x <- connect(port = Sys.getenv("TEST_ES_PORT"))
+x <- connect(port = Sys.getenv("TEST_ES_PORT"), warn=FALSE)
 
 test_that("nodes_stats", {
 
