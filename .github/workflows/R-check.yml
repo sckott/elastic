@@ -12,6 +12,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
+        - { os: ubuntu-16.04, r: 'latest', es_ver: '7.16.2', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
         - { os: ubuntu-16.04, r: 'latest', es_ver: '7.9.3', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
         - { os: ubuntu-16.04, r: 'latest', es_ver: '7.5.1', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
         - { os: ubuntu-16.04, r: 'latest', es_ver: '6.5.3', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
@@ -38,11 +39,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: r-lib/actions/setup-r@v1
+      - uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.config.r }}
 
-      - uses: r-lib/actions/setup-pandoc@v1
+      - uses: r-lib/actions/setup-pandoc@v2
 
       - name: Cache R packages
         if: runner.os != 'Windows'
