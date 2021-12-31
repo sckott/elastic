@@ -33,6 +33,8 @@ elastic_env <- new.env()
 #' which has the Elasticsearch version. We use the version to do
 #' alter what request is sent as different Elasticsearch versions allow
 #' different parameters.
+#' @param normalize_path (logical) normalize path? Sometimes you want your
+#' trailing slash. by default trailing slash is removed. default: `TRUE`
 #' @param ... additional curl options to be passed in ALL http requests
 #'
 #' @details The default configuration is set up for localhost access on port
@@ -95,12 +97,14 @@ elastic_env <- new.env()
 connect <- function(host = "127.0.0.1", port = 9200, path = NULL,
   transport_schema = "http", user = NULL, pwd = NULL,
   headers = NULL, cainfo = NULL, force = FALSE,
-  errors = "simple", warn = TRUE, ignore_version = FALSE, ...) {
+  errors = "simple", warn = TRUE, ignore_version = FALSE, 
+  normalize_path = TRUE, ...) {
 
   Elasticsearch$new(host = host, port = port, path = path,
       transport_schema = transport_schema, user = user, pwd = pwd,
       headers = headers, cainfo = cainfo, force = force,
-      errors = errors, warn = warn, ignore_version = ignore_version, ...)
+      errors = errors, warn = warn, ignore_version = ignore_version, 
+      normalize_path = normalize_path, ...)
 }
 
 Elasticsearch <- R6::R6Class(
@@ -123,7 +127,8 @@ Elasticsearch <- R6::R6Class(
     initialize = function(host = "127.0.0.1", port = 9200, path = NULL,
       transport_schema = "http", user = NULL, pwd = NULL,
       headers = NULL, cainfo = NULL, force = FALSE,
-      errors = "simple", warn = TRUE, ignore_version = FALSE, ...) {
+      errors = "simple", warn = TRUE, ignore_version = FALSE, 
+      normalize_path = TRUE, ...) {
 
       self$port <- port
       self$transport_schema <- transport_schema
@@ -147,10 +152,12 @@ Elasticsearch <- R6::R6Class(
       self$host <- host
 
       # normalize path
-      if (!is.null(path)) {
-        if (grepl("/$", path)) {
-          message("Normalizing path: stripping trailing slash")
-          path <- sub("/$", "", path)
+      if (normalize_path) {
+        if (!is.null(path)) {
+          if (grepl("/$", path)) {
+            message("Normalizing path: stripping trailing slash")
+            path <- sub("/$", "", path)
+          }
         }
       }
       self$path <- path

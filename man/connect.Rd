@@ -17,6 +17,7 @@ connect(
   errors = "simple",
   warn = TRUE,
   ignore_version = FALSE,
+  normalize_path = TRUE,
   ...
 )
 }
@@ -62,6 +63,9 @@ it's not possible to ping the root route of the Elasticsearch instance,
 which has the Elasticsearch version. We use the version to do
 alter what request is sent as different Elasticsearch versions allow
 different parameters.}
+
+\item{normalize_path}{(logical) normalize path? Sometimes you want your
+trailing slash. by default trailing slash is removed. default: \code{TRUE}}
 
 \item{...}{additional curl options to be passed in ALL http requests}
 }
