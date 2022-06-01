@@ -258,6 +258,9 @@ scroll.character <- function(conn, x, time_scroll = "1m", raw = FALSE, asdf = FA
       body <- list(scroll = time_scroll, scroll_id = x)
       args <- list()
     }
+  } else {
+     body <- list(scroll = time_scroll, scroll_id = x)
+     args <- list()
   }
   tmp <- scroll_POST(
     conn = conn,
