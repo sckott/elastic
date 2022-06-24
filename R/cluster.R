@@ -164,8 +164,8 @@ cluster_stats <- function(conn, index=NULL, raw=FALSE, callopts=list(),
 #' @rdname cluster
 cluster_reroute <- function(conn, body, raw=FALSE, callopts=list(), ...) {
   is_conn(conn)
-  es_POST(conn, '_cluster/reroute', query = body, raw = raw, callopts = callopts, 
-    ...)
+  es_POST(conn, '_cluster/reroute', NULL, NULL, NULL, raw, callopts,
+    body, list(), ...)
 }
 
 #' @export
